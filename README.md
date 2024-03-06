@@ -13,14 +13,23 @@
 For a given dataset, we first construct the noise and then fine-tune a [BERT](https://huggingface.co/bert-base-cased/tree/main) model based on the descriptions of all entities, which will be loaded as a basic module before training CCA. Then we train CCA model to get the result.
 
 ### noise construction
+```bash
 python ./Code/data_process/gen_anomaly.py --model_path checkpoints/bert-base-cased --dataset wn18rr --device cuda:0 --max_seq_length 64 --batch_size 256 --lm_lr 1e-4 --lm_label_smoothing 0.8 --num_workers 8 --pin_memory True 
+```
+
 
 
 ### Pretrain bert encoder with entity description
-python pretrain_bert.py --task pretrain --model_path checkpoints/bert-base-cased --epoch 20 --batch_size 512 --device cuda:0 --dataset wn18rr --max_seq_length 64 --lm_lr 1e-4 --lm_label_smoothing 0.8 --num_workers 8 --pin_memory True
+```bash
+python pretrain_bert.py --task pretrain --model_path checkpoints/bert-base-cased --epoch 20 --batch_size 512 --device cuda:0 --dataset wn18rr --max_seq_length 64 --lm_lr 1e-4 --lm_label_smoothing 0.8 --num_workers 8 --pin_memory True 
+```
+
 
 ### Train CCA
+```bash
 python train_CCA.py --epoch 20 --model_path checkpoints/wn18rr/bert-pretrained/ --dataset wn18rr --batch_size 512 --num_workers 32 --use_amp --device cuda:0
+```
+
 
 ## Citation
 ```
