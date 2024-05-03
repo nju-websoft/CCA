@@ -475,7 +475,7 @@ class KGCDataModule:
        
     
     def text_batch_encoding(self, inputs):
-        encoded_data = self.tokenizer(inputs, padding=True, truncation=True, max_length=self.max_seq_length)
+        encoded_data = self.tokenizer(inputs, padding='max_length', truncation=True, max_length=self.max_seq_length)
         input_ids = torch.tensor(encoded_data['input_ids'])
         test = self.tokenizer.convert_ids_to_tokens(input_ids[0])
         token_type_ids = torch.tensor(encoded_data['token_type_ids'])
